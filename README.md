@@ -19,3 +19,21 @@ optional arguments:
                         The languages Tweets written in which to include. Example: -l en de. If no languages are specified, no filtering is performed.
   -s, --strict          Flag whether to filter tweets only by Twitter's identification. If unchecked, includes Tweets tagged using the LangID tool in post
   --tgz, --targzipped   Flag whether the input(s) is/are tarballed/gzipped collections of tweet id information json files
+
+##Example
+Given the input
+>{"tweet_id":1222480698642030592,"Twitter_lang":"zh","date_year":2020,"date_month":1,"date_weekOfYear":5,"date":"2020-01-29","country":"N/A","LangID_tool":"N/A"}
+>{"tweet_id":1221845540960268288,"Twitter_lang":"ja","date_year":2020,"date_month":1,"date_weekOfYear":5,"date":"2020-01-27","country":"N/A","LangID_tool":"N/A"}
+>{"tweet_id":1221845383183093760,"Twitter_lang":"zh","date_year":2020,"date_month":1,"date_weekOfYear":5,"date":"2020-01-27","country":"N/A","LangID_tool":"N/A"}
+>{"tweet_id":1221845318595035136,"Twitter_lang":"zh","date_year":2020,"date_month":1,"date_weekOfYear":5,"date":"2020-01-27","country":"N/A","LangID_tool":"N/A"}
+>{"tweet_id":1221845057134718983,"Twitter_lang":"zh","date_year":2020,"date_month":1,"date_weekOfYear":5,"date":"2020-01-27","country":"N/A","LangID_tool":"N/A"}
+>{"tweet_id":1221844992181690368,"Twitter_lang":"ja","date_year":2020,"date_month":1,"date_weekOfYear":5,"date":"2020-01-27","country":"N/A","LangID_tool":"N/A"}
+>{"tweet_id":1221844951341731840,"Twitter_lang":"ja","date_year":2020,"date_month":1,"date_weekOfYear":5,"date":"2020-01-27","country":"N/A","LangID_tool":"N/A"}
+
+Running
+`python $DIRECTORY/megacov_filter.py $IN -l ja > $OUT`
+
+Yields
+>1221845540960268288
+>1221844992181690368
+>1221844951341731840
