@@ -1,0 +1,7 @@
+{"tweet_id":1222480698642030592,"Twitter_lang":"zh","date_year":2020,"date_month":1,"date_weekOfYear":5,"date":"2020-01-29","country":"N/A","LangID_tool":"N/A"}
+{"tweet_id":1221845540960268288,"Twitter_lang":"ja","date_year":2020,"date_month":1,"date_weekOfYear":5,"date":"2020-01-27","country":"N/A","LangID_tool":"N/A"}
+{"tweet_id":1221845383183093760,"Twitter_lang":"zh","date_year":2020,"date_month":1,"date_weekOfYear":5,"date":"2020-01-27","country":"N/A","LangID_tool":"N/A"}
+{"tweet_id":1221845318595035136,"Twitter_lang":"zh","date_year":2020,"date_month":1,"date_weekOfYear":5,"date":"2020-01-27","country":"N/A","LangID_tool":"N/A"}
+{"tweet_id":1221845057134718983,"Twitter_lang":"zh","date_year":2020,"date_month":1,"date_weekOfYear":5,"date":"2020-01-27","country":"N/A","LangID_tool":"N/A"}
+{"tweet_id":1221844992181690368,"Twitter_lang":"ja","date_year":2020,"date_month":1,"date_weekOfYear":5,"date":"2020-01-27","country":"N/A","LangID_tool":"N/A"}
+{"tweet_id":1221844951341731840,"Twitter_lang":"ja","date_year":2020,"date_month":1,"date_weekOfYear":5,"date":"2020-01-27","country":"N/A","LangID_tool":"N/A"}
