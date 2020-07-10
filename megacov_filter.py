@@ -3,6 +3,7 @@ import argparse
 import json
 import tarfile
 import warnings
+from itertools import chain
 from typing import List, Iterable
 
 def filter_and_isolate_tweet_ids(tweet_jsons: Iterable[str], languages: List[str], strict_match: bool) -> Iterable[int]:
@@ -42,7 +43,7 @@ if __name__ == '__main__':
     infiles = args.infiles
     if args.tgz:
         tarmemberlists = (tarfile.open(tar).members() for tar in args.infiles)
-        infiles = (infile for infile in tarmemberlist for tarmemberlist in tarmemberlists)
+        infiles = infile for infile in chain(tarmemberlists)
 
     #Extract and print Tweet IDs for each of the resulting Tweets after filtering
     for infile in infiles:
