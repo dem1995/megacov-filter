@@ -43,7 +43,7 @@ if __name__ == '__main__':
     infiles = args.infiles
     if args.tgz:
         tarmemberlists = (tarfile.open(tar).members() for tar in args.infiles)
-        infiles = infile for infile in chain(tarmemberlists)
+        infiles = (infile for infile in chain(tarmemberlists))
 
     #Extract and print Tweet IDs for each of the resulting Tweets after filtering
     for infile in infiles:
