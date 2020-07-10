@@ -3,8 +3,8 @@ import argparse
 import json
 import tarfile
 import warnings
-from itertools import chain
-from typing import List, Iterable
+from contextlib import closing
+from typing import List, Iterable, IO
 
 def filter_and_isolate_tweet_ids(tweet_jsons: Iterable[str], languages: List[str], strict_match: bool) -> Iterable[int]:
     """
@@ -25,6 +25,7 @@ def filter_and_isolate_tweet_ids(tweet_jsons: Iterable[str], languages: List[str
             yield cur_tweet['tweet_id']
 
 if __name__ == '__main__':
+    #Parse the arguments
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('infiles', metavar='I', nargs='+',
                         help="The file(s) to read in and from which to isolate Tweet IDs")
@@ -33,21 +34,35 @@ if __name__ == '__main__':
     parser.add_argument('-s', '--strict', action='store_true',
                         help="Flag whether to filter tweets only by Twitter's identification. If unchecked, includes Tweets tagged using the LangID tool in post")
     parser.add_argument('--tgz', '--targzipped', action='store_true',
-                        help="Flag whether the input(s) is/are tarballed/gzipped collections of tweet id information json files")
+                        help="Flag whether the input(s) is/are tarballed & gzipped collections of tweet id information json files")
     args = parser.parse_args()
 
     if args.languages is None:
         warnings.warn("No languages were specified for filtering. All languages will be included.", stacklevel=2)
 
-    #Determine whether infiles are tarballed/gzipped file collections
-    infiles = args.infiles
-    if args.tgz:
-        tarmemberlists = (tarfile.open(tar).members() for tar in args.infiles)
-        infiles = (infile for infile in chain(tarmemberlists))
+    #Determine whether infiles are tarballed/gzipped file collections, and prepare an iterator over each json file, opened
+    def _yield_open_targz_content_files(targzs: Iterable[str]) -> Iterable[IO]:
+        """Returns an iterable over open files contained within the provided gzipped targz collections of said files"""
+        for targz in targzs:
+            with closing(tarfile.open(targz)) as opened_tar:
+                tar_members = opened_tar.getmembers()
+                for member in tar_members:
+                    opened_extracted_file = opened_tar.extractfile(member)
+                    yield opened_extracted_file
 
-    #Extract and print Tweet IDs for each of the resulting Tweets after filtering
-    for infile in infiles:
-        with open(infile) as opened_infile:
-            tweet_ids = filter_and_isolate_tweet_ids(tweet_jsons=opened_infile, languages=args.languages, strict_match=args.strict)
-            for tweet_id in tweet_ids:
-                print(tweet_id)
+    def _yield_open_files(closed_files: Iterable[str]) -> Iterable[IO]:
+        """Returns an iterable over each of the provided files, opened"""
+        for closed_file in closed_files:
+            with closing(open(closed_file)) as opened_file:
+                yield opened_file
+
+    if args.tgz:
+        opened_infiles = _yield_open_targz_content_files(args.infiles)
+    else:
+        opened_infiles = _yield_open_files(args.infiles)
+
+    #Extract and print Tweet IDs for each of the resulting Tweets (contained within the json files) after filtering
+    for opened_infile in opened_infiles:
+        tweet_ids = filter_and_isolate_tweet_ids(tweet_jsons=opened_infile, languages=args.languages, strict_match=args.strict)
+        for tweet_id in tweet_ids:
+            print(tweet_id)
