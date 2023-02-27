@@ -26,7 +26,7 @@ Yields
 usage: `megacov_filter.py [-h] [-l LANGUAGES [LANGUAGES ...]] [-s] [--tgz] I [I ...]`
 
 Filters the provided file of json-formatted Tweet IDs/language of origin by the provided language and isolates the Tweet IDs for hydration
-
+```
 positional arguments:
   I                     The file(s) to read in and from which to isolate Tweet IDs
 
@@ -36,3 +36,4 @@ optional arguments:
                         The languages Tweets written in which to include. Example: -l en de. If no languages are specified, no filtering is performed.
   -s, --strict          Flag whether to filter tweets only by Twitter's identification. If unchecked, includes Tweets tagged using the LangID tool in post
   --tgz, --targzipped   Flag whether the input(s) is/are tarballed/gzipped collections of tweet id information json files
+```
